@@ -17,12 +17,10 @@ class Assignment extends Model
         'due_date',
         'max_marks',
         'file_path',
-        'is_published'
     ];
 
     protected $casts = [
         'due_date' => 'datetime',
-        'is_published' => 'boolean'
     ];
 
     // Relationships

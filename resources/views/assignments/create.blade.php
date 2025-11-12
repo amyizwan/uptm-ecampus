@@ -101,17 +101,30 @@
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="max_marks" class="form-label">Maximum Marks</label>
-                                                <input type="number" class="form-control" id="max_marks" name="max_marks" min="1" max="100" value="100" required>
+                                                <input type="number" class="form-control" id="max_marks" name="max_marks" min="1" max="1000" value="100" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="col-md-4">
+                                    <!-- ADDED: Subject Field -->
                                     <div class="mb-3">
-                                        <label for="assignment_file" class="form-label">Assignment File (Optional)</label>
-                                        <input type="file" class="form-control" id="assignment_file" name="assignment_file">
-                                        <div class="form-text">Supported formats: PDF, DOC, DOCX, ZIP (Max: 10MB)</div>
+                                        <label for="subject_id" class="form-label">Subject</label>
+                                        <select class="form-control" id="subject_id" name="subject_id" required>
+                                            <option value="">Select a subject</option>
+                                            <!-- You'll need to populate this with actual subjects from your database -->
+                                            <option value="1">Mathematics</option>
+                                            <option value="2">Science</option>
+                                            <option value="3">Programming</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- CHANGED: File field name from 'assignment_file' to 'file' -->
+                                    <div class="mb-3">
+                                        <label for="file" class="form-label">Assignment File (Optional)</label>
+                                        <input type="file" class="form-control" id="file" name="file">
+                                        <div class="form-text">Supported formats: PDF, DOC, DOCX (Max: 10MB)</div>
                                     </div>
                                     
                                     <div class="card">

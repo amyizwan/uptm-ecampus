@@ -95,37 +95,37 @@
                 <div class="d-flex flex-column flex-shrink-0 p-3 text-white">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                                 <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.users') }}" class="nav-link {{ request()->routeIs('admin.users') ? 'active' : '' }}">
                                 <i class="fas fa-users me-2"></i>User Management
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.subjects') }}" class="nav-link {{ request()->routeIs('admin.subjects') ? 'active' : '' }}">
                                 <i class="fas fa-book me-2"></i>Subject Management
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.settings') }}" class="nav-link {{ request()->routeIs('admin.settings') ? 'active' : '' }}">
                                 <i class="fas fa-cog me-2"></i>System Settings
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.analytics') }}" class="nav-link {{ request()->routeIs('admin.analytics') ? 'active' : '' }}">
                                 <i class="fas fa-chart-bar me-2"></i>Analytics
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.backup') }}" class="nav-link {{ request()->routeIs('admin.backup') ? 'active' : '' }}">
                                 <i class="fas fa-database me-2"></i>Backup
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.activity-logs') }}" class="nav-link {{ request()->routeIs('admin.activity-logs') ? 'active' : '' }}">
                                 <i class="fas fa-clipboard-list me-2"></i>Activity Logs
                             </a>
                         </li>
@@ -167,7 +167,7 @@
                                                 <div class="text-xs font-weight-bold text-uptm-blue text-uppercase mb-1">
                                                     Total Students
                                                 </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalStudents }}</div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-user-graduate fa-2x text-uptm-blue"></i>
@@ -185,7 +185,7 @@
                                                 <div class="text-xs font-weight-bold text-uptm-blue text-uppercase mb-1">
                                                     Total Lecturers
                                                 </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalLecturers }}</div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-chalkboard-teacher fa-2x text-uptm-red"></i>
@@ -203,7 +203,7 @@
                                                 <div class="text-xs font-weight-bold text-uptm-blue text-uppercase mb-1">
                                                     Active Subjects
                                                 </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalSubjects }}</div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-book fa-2x text-uptm-blue"></i>
@@ -283,7 +283,7 @@
                             <div class="col-md-6">
                                 <h6 class="text-uptm-blue">Quick Stats</h6>
                                 <ul class="list-unstyled">
-                                    <li><strong>Total Users:</strong> 3</li>
+                                    <li><strong>Total Users:</strong> {{ $totalUsers }}</li>
                                     <li><strong>Active Sessions:</strong> 1</li>
                                     <li><strong>Last Backup:</strong> Never</li>
                                     <li><strong>System Uptime:</strong> 100%</li>

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\Announcement;
 use App\Models\Assignment;
 use App\Models\Grade;
 use App\Models\Attendance;
 use App\Models\Document;
+use App\Models\Subject;
 
 class DashboardController extends Controller
 {
@@ -61,40 +63,40 @@ class DashboardController extends Controller
     }
     
     public function lecturer()
-{
-    $user = Auth::user();
-    
-    // If no user is logged in, use dummy data for testing
-    if (!$user) {
-        $user = (object)[
-            'name' => 'Dr. Lecturer',
-            'role' => 'lecturer',
-            'email' => 'lecturer@uptm.edu.my',
-            'id' => 2
-        ];
+    {
+        $user = Auth::user();
+        
+        // If no user is logged in, use dummy data for testing
+        if (!$user) {
+            $user = (object)[
+                'name' => 'Dr. Lecturer',
+                'role' => 'lecturer',
+                'email' => 'lecturer@uptm.edu.my',
+                'id' => 2
+            ];
+        }
+
+        // Get real data for lecturer
+        $myAnnouncementsCount = Announcement::where('user_id', $user->id)->count();
+        $myAssignmentsCount = Assignment::where('lecturer_id', $user->id)->count();
+        $subjects = Subject::where('lecturer_id', $user->id)->get();
+        $subjectsCount = $subjects->count();
+        $pendingGradingCount = 0; // You can add submission counting logic later
+        $recentAnnouncements = Announcement::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('dashboard.lecturer', compact(
+            'user',
+            'myAnnouncementsCount',
+            'myAssignmentsCount',
+            'subjects',
+            'subjectsCount',
+            'pendingGradingCount',
+            'recentAnnouncements'
+        ));
     }
-
-    // Get real data for lecturer
-    $myAnnouncementsCount = \App\Models\Announcement::where('user_id', $user->id)->count();
-    $myAssignmentsCount = \App\Models\Assignment::where('lecturer_id', $user->id)->count();
-    $subjects = \App\Models\Subject::where('lecturer_id', $user->id)->get();
-    $subjectsCount = $subjects->count();
-    $pendingGradingCount = 0; // You can add submission counting logic later
-    $recentAnnouncements = \App\Models\Announcement::where('user_id', $user->id)
-        ->orderBy('created_at', 'desc')
-        ->take(3)
-        ->get();
-
-    return view('dashboard.lecturer', compact(
-        'user',
-        'myAnnouncementsCount',
-        'myAssignmentsCount',
-        'subjects',
-        'subjectsCount',
-        'pendingGradingCount',
-        'recentAnnouncements'
-    ));
-}
     
     public function admin()
     {
@@ -108,6 +110,18 @@ class DashboardController extends Controller
             ];
         }
         
-        return view('dashboard.admin', compact('user'));
+        // Fetch admin dashboard statistics
+        $totalStudents = User::where('role', 'student')->count();
+        $totalLecturers = User::where('role', 'lecturer')->count();
+        $totalSubjects = Subject::count();
+        $totalUsers = User::count(); // <-- ADDED: Calculate total users
+
+        return view('dashboard.admin', compact(
+            'user', 
+            'totalStudents', 
+            'totalLecturers',
+            'totalSubjects',
+            'totalUsers' // <-- ADDED: Pass total users to the view
+        ));
     }
 }
