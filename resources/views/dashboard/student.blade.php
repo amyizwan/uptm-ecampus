@@ -58,9 +58,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('announcements.index') }}" class="nav-link">
-                                <i class="fas fa-bullhorn me-2"></i>Announcements
-                            </a>
+<a href="{{ route('student.announcements.index') }}" class="nav-link">
+    <i class="fas fa-bullhorn me-2"></i>Announcements
+</a>
+
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('assignments.index') }}" class="nav-link">
@@ -72,16 +73,16 @@
                                 <i class="fas fa-chart-bar me-2"></i>Grades
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="#attendance-section" class="nav-link">
                                 <i class="fas fa-calendar-check me-2"></i>Attendance
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </li> -->
+                        <!-- <li class="nav-item">
                             <a href="#documents-section" class="nav-link">
                                 <i class="fas fa-file-alt me-2"></i>Documents
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a href="#profile-section" class="nav-link">
                                 <i class="fas fa-user me-2"></i>Profile
@@ -172,7 +173,7 @@
                                 </a>
                             </div>
 
-                            <div class="col-xl-3 col-md-6 mb-4">
+                            <!-- <div class="col-xl-3 col-md-6 mb-4">
                                 <a href="#attendance-section" class="text-decoration-none">
                                     <div class="card stat-card border-0 shadow-sm h-100">
                                         <div class="card-body">
@@ -190,7 +191,7 @@
                                         </div>
                                     </div>
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -241,7 +242,7 @@
                 </div>
 
                 <!-- Attendance Section -->
-                <div class="card border-0 shadow-sm mb-4" id="attendance-section">
+                <!-- <div class="card border-0 shadow-sm mb-4" id="attendance-section">
                     <div class="card-header bg-white">
                         <h5 class="mb-0 text-uptm-blue">
                             <i class="fas fa-calendar-check me-2"></i>Attendance Record
@@ -296,9 +297,9 @@
                             <p class="text-muted text-center">No attendance records available.</p>
                         @endif
                     </div>
-                </div>
+                </div> -->
 
-                <!-- Documents Section -->
+                <!-- Documents Section
                 <div class="card border-0 shadow-sm mb-4" id="documents-section">
                     <div class="card-header bg-white">
                         <h5 class="mb-0 text-uptm-blue">
@@ -330,7 +331,7 @@
                             <p class="text-muted text-center">No documents available yet.</p>
                         @endif
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Profile Section -->
                 <div class="card border-0 shadow-sm" id="profile-section">
@@ -375,9 +376,10 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <button class="btn btn-uptm-blue">
+                            <a href="{{ route('student.profile.edit') }}" class="btn btn-uptm-blue">
                                 <i class="fas fa-edit me-1"></i>Edit Profile
-                            </button>
+                            </a>
+
                         </div>
                     </div>
                 </div>

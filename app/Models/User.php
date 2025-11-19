@@ -44,17 +44,19 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
-
+    
     // ADD THESE RELATIONSHIPS HERE:
     public function taughtSubjects()
     {
         return $this->hasMany(Subject::class, 'lecturer_id');
     }
-
+    
     public function subjects()
-    {
-        return $this->belongsToMany(Subject::class, 'subject_user');
-    }
+{
+    return $this->belongsToMany(Subject::class, 'subject_student', 'student_id', 'subject_id')
+                ->withTimestamps();
+}
+
 
     // PHP 7 COMPATIBLE VERSION:
     public function getRedirectRoute()

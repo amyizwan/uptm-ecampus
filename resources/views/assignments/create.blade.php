@@ -90,7 +90,15 @@
                                         <label for="description" class="form-label">Description</label>
                                         <textarea class="form-control" id="description" name="description" rows="6" required></textarea>
                                     </div>
-                                    
+                                    <div class="mb-3">
+                                            <label for="subject_id" class="form-label">Subject</label>
+                                                <select class="form-select" id="subject_id" name="subject_id" required>
+                                                    <option value="" disabled selected>Select a subject</option>
+                                                    @foreach($subjects as $subject)
+                                                    <option value="{{ $subject->id }}">{{ $subject->code }} - {{ $subject->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                        </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-3">
@@ -114,7 +122,7 @@
                                         <div class="form-text">Supported formats: PDF, DOC, DOCX, ZIP (Max: 10MB)</div>
                                     </div>
                                     
-                                    <div class="card">
+                                    <!-- <div class="card">
                                         <div class="card-body">
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" type="checkbox" id="publish" name="publish" checked>
@@ -126,7 +134,7 @@
                                                 If unchecked, the assignment will be saved as a draft.
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
 

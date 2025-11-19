@@ -68,40 +68,25 @@
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white">
         <ul class="nav nav-pills flex-column mb-auto">
 
-            @if(Auth::user()->role === 'lecturer')
+ @if(Auth::user()->role === 'admin')
                 <li class="nav-item">
-                    <a href="{{ route('lecturer.dashboard') }}" class="nav-link">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link">
                         <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('announcements.index') }}" class="nav-link">
-                        <i class="fas fa-bullhorn me-2"></i>Announcements
+                    <a href="{{ route('admin.users') }}" class="nav-link">
+                        <i class="fas fa-users me-2"></i>User Management
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('assignments.indexlect') }}" class="nav-link">
-                        <i class="fas fa-tasks me-2"></i>Assignments
+                    <a href="{{ route('admin.subjects') }}" class="nav-link">
+                        <i class="fas fa-book me-2"></i>Subject Management
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('lecturer.dashboard') }}#subjects-section" class="nav-link">
-                        <i class="fas fa-book me-2"></i>My Subjects
-                    </a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a href="{{ route('lecturer.dashboard') }}#grades-section" class="nav-link">
-                        <i class="fas fa-chart-bar me-2"></i>Grades
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('lecturer.dashboard') }}#attendance-section" class="nav-link">
-                        <i class="fas fa-calendar-check me-2"></i>Attendance
-                    </a>
-                </li> -->
-                <li class="nav-item">
-                    <a href="{{ route('lecturer.dashboard') }}#profile-section" class="nav-link">
-                        <i class="fas fa-user me-2"></i>Profile
+                    <a href="{{ route('admin.announcements') }}" class="nav-link">
+                        <i class="fas fa-bullhorn me-2"></i>System Announcements
                     </a>
                 </li>
             @endif

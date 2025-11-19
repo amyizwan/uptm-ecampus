@@ -10,11 +10,32 @@ use Illuminate\Support\Facades\Auth;
 class AnnouncementController extends Controller
 {
     // Show all announcements
-    public function index()
-    {
-        $announcements = Announcement::with('user')->orderBy('created_at', 'desc')->get();
-        return view('announcements.index', compact('announcements'));
-    }
+public function index()
+{
+    $user = Auth::user();
+
+    // All announcements (for display)
+    $announcements = Announcement::with('user')->orderBy('created_at', 'desc')->get();
+
+    // Lecturer-specific metrics
+    $myAnnouncementsCount = Announcement::where('user_id', $user->id)->count();
+    $myAssignmentsCount = \App\Models\Assignment::where('lecturer_id', $user->id)->count();
+    $subjects = Subject::where('lecturer_id', $user->id)->get();
+    $subjectsCount = $subjects->count();
+    $recentAnnouncements = Announcement::where('user_id', $user->id)
+        ->orderBy('created_at', 'desc')
+        ->take(3)
+        ->get();
+
+    return view('announcements.indexlect', compact(
+        'announcements',
+        'myAnnouncementsCount',
+        'myAssignmentsCount',
+        'subjectsCount',
+        'recentAnnouncements'
+    ));
+}
+
 
     // Show create form (for admins only)
     public function create()

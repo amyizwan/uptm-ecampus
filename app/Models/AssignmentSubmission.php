@@ -17,7 +17,7 @@ class AssignmentSubmission extends Model
         'marks',
         'feedback',
         'submitted_at',
-        'graded_at'
+        'graded_at',
     ];
 
     protected $casts = [

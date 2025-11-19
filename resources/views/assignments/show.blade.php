@@ -43,47 +43,91 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar p-0">
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-white">
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a href="{{ url('/' . Auth::user()->role) }}" class="nav-link">
-                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('announcements.index') }}" class="nav-link">
-                                <i class="fas fa-bullhorn me-2"></i>Announcements
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('assignments.index') }}" class="nav-link active">
-                                <i class="fas fa-tasks me-2"></i>Assignments
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/' . Auth::user()->role) }}#grades-section" class="nav-link">
-                                <i class="fas fa-chart-bar me-2"></i>Grades
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/' . Auth::user()->role) }}#attendance-section" class="nav-link">
-                                <i class="fas fa-calendar-check me-2"></i>Attendance
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/' . Auth::user()->role) }}#documents-section" class="nav-link">
-                                <i class="fas fa-file-alt me-2"></i>Documents
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/' . Auth::user()->role) }}#profile-section" class="nav-link">
-                                <i class="fas fa-user me-2"></i>Profile
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <!-- Sidebar -->
+<div class="col-md-3 col-lg-2 sidebar p-0">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white">
+        <ul class="nav nav-pills flex-column mb-auto">
+
+            @if(Auth::user()->role === 'lecturer')
+                <li class="nav-item">
+                    <a href="{{ route('lecturer.dashboard') }}" class="nav-link">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('announcements.index') }}" class="nav-link">
+                        <i class="fas fa-bullhorn me-2"></i>Announcements
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('assignments.index') }}" class="nav-link active">
+                        <i class="fas fa-tasks me-2"></i>Assignments
+                    </a>
+
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('lecturer.dashboard') }}#subjects-section" class="nav-link">
+                        <i class="fas fa-book me-2"></i>My Subjects
+                    </a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a href="{{ route('lecturer.dashboard') }}#grades-section" class="nav-link">
+                        <i class="fas fa-chart-bar me-2"></i>Grades
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('lecturer.dashboard') }}#attendance-section" class="nav-link">
+                        <i class="fas fa-calendar-check me-2"></i>Attendance
+                    </a>
+                </li> -->
+                <li class="nav-item">
+                    <a href="{{ route('lecturer.dashboard') }}#profile-section" class="nav-link">
+                        <i class="fas fa-user me-2"></i>Profile
+                    </a>
+                </li>
+            @endif
+                            <!-- student sidebar -->
+                         @if(Auth::user()->role === 'student')
+                <li class="nav-item">
+                    <a href="{{ route('student.dashboard') }}" class="nav-link">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('student.announcements.index') }}" class="nav-link">
+                        <i class="fas fa-bullhorn me-2"></i>Announcements
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('assignments.index') }}" class="nav-link">
+                        <i class="fas fa-tasks me-2"></i>Assignments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('student.dashboard') }}#grades-section" class="nav-link">
+                        <i class="fas fa-chart-bar me-2"></i>Grades
+                    </a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a href="{{ route('student.dashboard') }}#attendance-section" class="nav-link">
+                        <i class="fas fa-calendar-check me-2"></i>Attendance
+                    </a>
+                </li> -->
+                <!-- <li class="nav-item">
+                    <a href="{{ route('student.dashboard') }}#documents-section" class="nav-link">
+                        <i class="fas fa-file-alt me-2"></i>Documents
+                    </a>
+                </li> -->
+                <li class="nav-item">
+                    <a href="{{ route('student.profile.edit') }}" class="nav-link">
+                        <i class="fas fa-user me-2"></i>Profile
+                    </a>
+                </li>
+            @endif
+        </ul>
+    </div>
+</div>
+
 
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 ml-sm-auto px-4 py-4">
@@ -122,42 +166,69 @@
                                         <p><strong>Due Date:</strong> {{ $assignment->due_date->format('M j, Y g:i A') }}</p>
                                         <p><strong>Max Marks:</strong> {{ $assignment->max_marks }}</p>
                                         <p><strong>Status:</strong> 
-                                            <span class="badge bg-{{ $assignment->is_published ? 'success' : 'warning' }}">
+                                            <!-- <span class="badge bg-{{ $assignment->is_published ? 'success' : 'warning' }}">
                                                 {{ $assignment->is_published ? 'Published' : 'Draft' }}
-                                            </span>
+                                            </span> -->
+                                            <span class="badge bg-success"> Published</span>
                                         </p>
                                         @if($assignment->subject)
                                             <p><strong>Subject:</strong> {{ $assignment->subject->name }}</p>
                                         @endif
+                                        <p><strong>Lecturer's File:</strong></p>
+                                        @if($assignment->file_path)
+    <a href="{{ route('assignments.lecturer.download', $assignment->id) }}" 
+       class="btn btn-sm btn-outline-primary">
+        <i class="fas fa-download me-1"></i> Download Lecturer File
+    </a>
+@endif
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        @if(Auth::user()->role === 'student')
-                            <div class="card">
-                                <div class="card-header bg-light">
-                                    <h6 class="mb-0"><i class="fas fa-paper-plane me-2"></i>Submit Assignment</h6>
-                                </div>
-                                <div class="card-body">
-                                    <form method="POST" action="{{ route('assignments.submit', $assignment) }}" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="submission_file" class="form-label">Upload Your Work *</label>
-                                            <input type="file" class="form-control" id="submission_file" name="submission_file" required>
-                                            <div class="form-text">Supported formats: PDF, DOC, DOCX, TXT, ZIP (Max: 10MB)</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="comments" class="form-label">Comments (Optional)</label>
-                                            <textarea class="form-control" id="comments" name="comments" rows="3" placeholder="Any additional comments for the lecturer..."></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-uptm-blue">
-                                            <i class="fas fa-paper-plane me-1"></i>Submit Assignment
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        @endif
+                       @if(Auth::user()->role === 'student')
+    @php
+        // Check if the logged-in student has already submitted this assignment
+        $studentSubmission = $assignment->submissions->where('student_id', Auth::id())->first();
+    @endphp
+
+    <div class="card">
+        <div class="card-header bg-light">
+            <h6 class="mb-0"><i class="fas fa-paper-plane me-2"></i>Submit Assignment</h6>
+        </div>
+        <div class="card-body">
+            @if($studentSubmission)
+                <!-- Show download link if already submitted -->
+                <p class="mb-3">You have already submitted this assignment.</p>
+                <a href="{{ route('assignments.download', [$assignment->id, $studentSubmission->id]) }}" 
+   class="btn btn-sm btn-outline-primary">
+    <i class="fas fa-download me-1"></i>Download Your Submission
+</a>
+
+                <p class="mt-2"><strong>Comments:</strong> {{ $studentSubmission->comments ?? 'No comments' }}</p>
+                <p class="text-muted">Submitted on {{ $studentSubmission->submitted_at->format('M j, Y g:i A') }}</p>
+            @else
+                <!-- Show upload form if not yet submitted -->
+                <form method="POST" action="{{ route('assignments.submit', $assignment) }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="submission_file" class="form-label">Upload Your Work *</label>
+                        <input type="file" class="form-control" id="submission_file" name="submission_file" required>
+                        <div class="form-text">Supported formats: PDF, DOC, DOCX, TXT, ZIP (Max: 10MB)</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comments" class="form-label">Comments (Optional)</label>
+                        <textarea class="form-control" id="comments" name="comments" rows="3" placeholder="Any additional comments for the lecturer..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-uptm-blue">
+                        <i class="fas fa-paper-plane me-1"></i>Submit Assignment
+                    </button>
+                </form>
+            @endif
+        </div>
+    </div>
+@endif
+
 
                         @if(Auth::user()->role === 'lecturer' || Auth::user()->role === 'admin')
                             <div class="card mt-4">

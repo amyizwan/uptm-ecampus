@@ -24,7 +24,7 @@ class Assignment extends Model
         'due_date' => 'datetime',
         'is_published' => 'boolean'
     ];
-
+    
     // Relationships
     public function subject()
     {
@@ -37,9 +37,9 @@ class Assignment extends Model
     }
 
     public function submissions()
-    {
-        return $this->hasMany(AssignmentSubmission::class);
-    }
+{
+    return $this->hasMany(AssignmentSubmission::class);
+}
 
     // Check if assignment is overdue
     public function isOverdue()

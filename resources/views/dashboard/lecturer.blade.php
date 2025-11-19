@@ -69,16 +69,16 @@
                                 <i class="fas fa-book me-2"></i>My Subjects
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="{{ url('/lecturer') }}#grading-section" class="nav-link">
-                                <i class="fas fa-chart-bar me-2"></i>Grading
+                                <i class="fas fa-chart-bar me-2"></i>Grades
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </li> -->
+                        <!-- <li class="nav-item">
                             <a href="{{ url('/lecturer') }}#attendance-section" class="nav-link">
                                 <i class="fas fa-calendar-check me-2"></i>Attendance
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a href="{{ url('/lecturer') }}#profile-section" class="nav-link">
                                 <i class="fas fa-user me-2"></i>Profile
@@ -207,12 +207,12 @@
                                     <a href="{{ route('assignments.create') }}" class="btn btn-uptm-red">
                                         <i class="fas fa-tasks me-1"></i>Create Assignment
                                     </a>
-                                    <a href="{{ url('/lecturer') }}#grading-section" class="btn btn-outline-uptm-blue">
+                                    <!-- <a href="{{ url('/lecturer') }}#grading-section" class="btn btn-outline-uptm-blue">
                                         <i class="fas fa-check-circle me-1"></i>Grade Assignments
-                                    </a>
-                                    <a href="{{ url('/lecturer') }}#attendance-section" class="btn btn-outline-uptm-red">
+                                    </a> -->
+                                    <!-- <a href="{{ url('/lecturer') }}#attendance-section" class="btn btn-outline-uptm-red">
                                         <i class="fas fa-calendar-check me-1"></i>Take Attendance
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         </div>
@@ -242,12 +242,13 @@
                                                 <i class="fas fa-star me-1"></i>{{ $subject->credits }} Credits
                                             </p>
                                             <div class="d-flex gap-2">
-                                                <button class="btn btn-sm btn-uptm-blue">
-                                                    <i class="fas fa-eye me-1"></i>View
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-uptm-blue">
-                                                    <i class="fas fa-list me-1"></i>Students
-                                                </button>
+                                                <a href="{{ route('subjects.show', $subject->id) }}" class="btn btn-sm btn-uptm-blue">
+                                                <i class="fas fa-eye me-1"></i>View
+                                                </a>
+
+                                                <a href="{{ route('subjects.students', $subject->id) }}" class="btn btn-sm btn-outline-uptm-blue">
+                                                <i class="fas fa-list me-1"></i>Students
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -339,9 +340,10 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <button class="btn btn-uptm-blue">
+                            <a href="{{ route('profile.edit') }}" class="btn btn-uptm-blue">
                                 <i class="fas fa-edit me-1"></i>Edit Profile
-                            </button>
+                            </a>
+
                         </div>
                     </div>
                 </div>

@@ -44,48 +44,91 @@
 
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar p-0">
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-white">
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a href="{{ url('/' . Auth::user()->role) }}" class="nav-link">
-                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('announcements.index') }}" class="nav-link">
-                                <i class="fas fa-bullhorn me-2"></i>Announcements
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('assignments.index') }}" class="nav-link active">
-                                <i class="fas fa-tasks me-2"></i>Assignments
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/' . Auth::user()->role) }}#grades-section" class="nav-link">
-                                <i class="fas fa-chart-bar me-2"></i>Grades
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/' . Auth::user()->role) }}#attendance-section" class="nav-link">
-                                <i class="fas fa-calendar-check me-2"></i>Attendance
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/' . Auth::user()->role) }}#documents-section" class="nav-link">
-                                <i class="fas fa-file-alt me-2"></i>Documents
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/' . Auth::user()->role) }}#profile-section" class="nav-link">
-                                <i class="fas fa-user me-2"></i>Profile
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <!-- lecturer Sidebar -->
+<div class="col-md-3 col-lg-2 sidebar p-0">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white">
+        <ul class="nav nav-pills flex-column mb-auto">
+
+            @if(Auth::user()->role === 'lecturer')
+                <li class="nav-item">
+                    <a href="{{ route('lecturer.dashboard') }}" class="nav-link">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('announcements.index') }}" class="nav-link">
+                        <i class="fas fa-bullhorn me-2"></i>Announcements
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('assignments.index') }}" class="nav-link active">
+                        <i class="fas fa-tasks me-2"></i>Assignments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('lecturer.dashboard') }}#subjects-section" class="nav-link">
+                        <i class="fas fa-book me-2"></i>My Subjects
+                    </a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a href="{{ route('lecturer.dashboard') }}#grades-section" class="nav-link">
+                        <i class="fas fa-chart-bar me-2"></i>Grades
+                    </a>
+                </li> -->
+                <!-- <li class="nav-item">
+                    <a href="{{ route('lecturer.dashboard') }}#attendance-section" class="nav-link">
+                        <i class="fas fa-calendar-check me-2"></i>Attendance
+                    </a>
+                </li> -->
+                <li class="nav-item">
+                    <a href="{{ route('lecturer.dashboard') }}#profile-section" class="nav-link">
+                        <i class="fas fa-user me-2"></i>Profile
+                    </a>
+                </li>
+            @endif
+            <!-- student sidebar -->
+                         @if(Auth::user()->role === 'student')
+                <li class="nav-item">
+                    <a href="{{ route('student.dashboard') }}" class="nav-link">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('student.announcements.index') }}" class="nav-link">
+                        <i class="fas fa-bullhorn me-2"></i>Announcements
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('assignments.index') }}" class="nav-link">
+                        <i class="fas fa-tasks me-2"></i>Assignments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('student.dashboard') }}#grades-section" class="nav-link">
+                        <i class="fas fa-chart-bar me-2"></i>Grades
+                    </a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a href="{{ route('student.dashboard') }}#attendance-section" class="nav-link">
+                        <i class="fas fa-calendar-check me-2"></i>Attendance
+                    </a>
+                </li> -->
+                <!-- <li class="nav-item">
+                    <a href="{{ route('student.dashboard') }}#documents-section" class="nav-link">
+                        <i class="fas fa-file-alt me-2"></i>Documents
+                    </a>
+                </li> -->
+                <li class="nav-item">
+                    <a href="{{ route('student.profile.edit') }}" class="nav-link">
+                        <i class="fas fa-user me-2"></i>Profile
+                    </a>
+                </li>
+            @endif
+        </ul>
+    </div>
+</div>
+
+ 
 
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 ml-sm-auto px-4 py-4">

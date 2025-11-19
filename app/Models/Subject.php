@@ -23,6 +23,14 @@ class Subject extends Model
         return $this->belongsTo(User::class, 'lecturer_id');
     }
 
+public function students()
+{
+    return $this->belongsToMany(User::class, 'subject_student', 'subject_id', 'student_id')
+                ->withTimestamps();
+}
+
+
+
     public function grades()
     {
         return $this->hasMany(Grade::class);

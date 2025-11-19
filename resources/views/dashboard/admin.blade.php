@@ -75,7 +75,7 @@
             </a>
             <div class="navbar-nav ms-auto">
                 <span class="navbar-text text-white me-3">
-                    <i class="fas fa-user-cog me-1"></i> {{ $user->name }} (Administrator)
+                    <i class="fas fa-user-cog me-1"></i> {{ $user->name }}
                 </span>
                 <!-- LOGOUT BUTTON -->
                 <form method="POST" action="{{ route('logout') }}" class="d-inline">
@@ -100,16 +100,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-users me-2"></i>User Management
-                            </a>
+    <a href="{{ route('admin.users') }}" class="nav-link">
+        <i class="fas fa-users me-2"></i>User Management
+    </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.subjects') }}" class="nav-link">
                                 <i class="fas fa-book me-2"></i>Subject Management
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-bullhorn me-2"></i>System Announcements
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fas fa-cog me-2"></i>System Settings
                             </a>
@@ -128,12 +133,8 @@
                             <a href="#" class="nav-link">
                                 <i class="fas fa-clipboard-list me-2"></i>Activity Logs
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-bullhorn me-2"></i>System Announcements
-                            </a>
-                        </li>
+                        </li> -->
+
                     </ul>
                 </div>
             </div>
@@ -158,60 +159,62 @@
                         </div>
 
                         <!-- Statistics Cards -->
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card stat-card border-0 shadow-sm h-100">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uptm-blue text-uppercase mb-1">
-                                                    Total Students
-                                                </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-user-graduate fa-2x text-uptm-blue"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uptm-blue text-uppercase mb-1">
+                            Total Students
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalStudents }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-user-graduate fa-2x text-uptm-blue"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card stat-card border-0 shadow-sm h-100">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uptm-blue text-uppercase mb-1">
-                                                    Total Lecturers
-                                                </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-chalkboard-teacher fa-2x text-uptm-red"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uptm-blue text-uppercase mb-1">
+                            Total Lecturers
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalLecturers }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-chalkboard-teacher fa-2x text-uptm-red"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card stat-card border-0 shadow-sm h-100">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uptm-blue text-uppercase mb-1">
-                                                    Active Subjects
-                                                </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-book fa-2x text-uptm-blue"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uptm-blue text-uppercase mb-1">
+                            Active Subjects
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $activeSubjects }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-book fa-2x text-uptm-blue"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card stat-card border-0 shadow-sm h-100">
@@ -232,7 +235,7 @@
                             </div>
                         </div>
 
-                        <!-- Quick Actions -->
+                        <!-- Quick Actions
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-0 shadow-sm">
@@ -260,12 +263,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
                 <!-- System Overview -->
-                <div class="card border-0 shadow-sm">
+                <!-- <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white">
                         <h6 class="mb-0 text-uptm-blue">System Overview</h6>
                     </div>
@@ -295,7 +298,7 @@
                             <strong>System Running Smoothly!</strong> All services are operational and running at optimal performance.
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

@@ -7,9 +7,52 @@ use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\AssignmentSubmission;
+
 
 class AssignmentController extends Controller
 {
+    public function downloadSubmissionFile($submissionId)
+{
+    $submission = AssignmentSubmission::findOrFail($submissionId);
+
+    $filePath = $submission->file_path;
+
+    if (Storage::disk('public')->exists($filePath)) {
+        return Storage::disk('public')->download($filePath);
+    }
+
+    return back()->with('error', 'File not found.');
+}
+
+    public function downloadGradeSubmission($submissionId)
+{
+    // Find submission by ID
+    $submission = AssignmentSubmission::findOrFail($submissionId);
+
+    $filePath = $submission->file_path;
+
+    if (Storage::disk('public')->exists($filePath)) {
+        // Force download
+        return Storage::disk('public')->download($filePath);
+    }
+
+    return back()->with('error', 'File not found.');
+}
+    public function downloadSubmission($submissionId)
+{
+    // Find submission by ID
+    $submission = AssignmentSubmission::findOrFail($submissionId);
+
+    $filePath = $submission->file_path;
+
+    if (Storage::disk('public')->exists($filePath)) {
+        // Force download
+        return Storage::disk('public')->download($filePath);
+    }
+
+    return back()->with('error', 'File not found.');
+}
     public function index()
     {
         $user = Auth::user();
@@ -31,15 +74,16 @@ class AssignmentController extends Controller
         return view('assignments.index', compact('assignments'));
     }
 
-    public function create()
-    {
-        if (Auth::user()->role !== 'lecturer' && Auth::user()->role !== 'admin') {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $subjects = Subject::all();
-        return view('assignments.create', compact('subjects'));
+public function create()
+{
+    if (Auth::user()->role !== 'lecturer' && Auth::user()->role !== 'admin') {
+        abort(403, 'Unauthorized action.');
     }
+
+    $subjects = \App\Models\Subject::where('lecturer_id', Auth::id())->get();
+    return view('assignments.create', compact('subjects'));
+}
+
 
     public function store(Request $request)
     {
@@ -70,6 +114,24 @@ class AssignmentController extends Controller
         $assignment->load('subject', 'lecturer');
         return view('assignments.show', compact('assignment'));
     }
+
+    public function download($assignmentId, $submissionId)
+{
+    // Ensure student can only download their own submission
+    $submission = AssignmentSubmission::where('assignment_id', $assignmentId)
+        ->where('id', $submissionId)
+        ->where('student_id', auth()->id())
+        ->firstOrFail();
+
+    $filePath = $submission->file_path;
+
+    if (Storage::disk('public')->exists($filePath)) {
+        // Force download
+        return Storage::disk('public')->download($filePath);
+    }
+
+    return back()->with('error', 'File not found.');
+}
 
     // SUBMIT METHOD - FIXED FOR lecturer_id
     public function submit(Request $request, Assignment $assignment)
@@ -129,8 +191,60 @@ class AssignmentController extends Controller
         // Load assignment with relationships and submissions
         $assignment->load(['subject', 'lecturer', 'submissions.student']);
         
-        return view('assignments.submissions', compact('assignment'));
+        return view('assignments.submission', compact('assignment'));
+
     }
+
+    public function grade(Assignment $assignment, \App\Models\AssignmentSubmission $submission)
+{
+    // Only lecturer who created the assignment or admin can grade
+    if ($assignment->lecturer_id !== Auth::id() && Auth::user()->role !== 'admin') {
+        abort(403, 'Unauthorized action.');
+    }
+
+    return view('assignments.grade', compact('assignment', 'submission'));
+}
+public function showSubject($id)
+{
+    // Fetch subject by ID
+    $subject = Subject::findOrFail($id);
+
+    // Pass it to a view
+    return view('assignments.subject', compact('subject'));
+}
+public function showStudents($id)
+{
+    $subject = Subject::with('students')->findOrFail($id);
+    return view('assignments.students', compact('subject'));
+}
+
+
+public function storeGrade(Request $request, Assignment $assignment, \App\Models\AssignmentSubmission $submission)
+{
+    // Only lecturer who created the assignment or admin can grade
+    if ($assignment->lecturer_id !== Auth::id() && Auth::user()->role !== 'admin') {
+        abort(403, 'Unauthorized action.');
+    }
+
+    // Validate input
+    $request->validate([
+        'marks' => 'required|integer|min:0|max:' . $assignment->max_marks,
+        'feedback' => 'nullable|string|max:500',
+    ]);
+
+    // Save grade
+    $submission->update([
+        'marks' => $request->marks,
+        'feedback' => $request->feedback,
+        'graded_at' => now(),
+    ]);
+
+    // ✅ Option A: redirect back to submissions list
+    return redirect()->route('assignments.submissions', $assignment)
+        ->with('success', 'Grade saved successfully!');
+}
+
+
 
     public function edit(Assignment $assignment)
     {
@@ -165,8 +279,14 @@ class AssignmentController extends Controller
             
         ]);
 
-        return redirect()->route('assignments.show', $assignment)
-            ->with('success', 'Assignment updated successfully!');
+        if (Auth::user()->role === 'lecturer') {
+    return redirect()->route('assignments.index')
+        ->with('success', 'Assignment created successfully!');
+}
+
+return redirect()->route('assignments.index')
+    ->with('success', 'Assignment created successfully!');
+
     }
 
     public function destroy(Assignment $assignment)
@@ -177,7 +297,13 @@ class AssignmentController extends Controller
 
         $assignment->delete();
 
-        return redirect()->route('assignments.index')
-            ->with('success', 'Assignment deleted successfully!');
+        if (Auth::user()->role === 'lecturer') {
+    return redirect()->route('assignments.index')
+        ->with('success', 'Assignment deleted successfully!');
+}
+
+return redirect()->route('assignments.index')
+    ->with('success', 'Assignment deleted successfully!');
+
     }
 }
